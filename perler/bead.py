@@ -2,11 +2,15 @@ import functools
 import operator
 
 class PerlerColor(object):
-    def __init__(self, code, name, rgb, type_)
+    def __init__(self, code, name, rgb, type_):
         self.code = code
         self.name = name
         self.rgb = rgb
         self.type_ = type_
+
+    def __repr__(self):
+        return "<PerlerColor {code} ({r},{g},{b})>".format(code=self.code,
+            r=self.rgb[0], g=self.rgb[1], b=self.rgb[2])
 
 def best_match(pallette, rgb):
     diff = functools.partial(diff_color, rgb)
