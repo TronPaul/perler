@@ -8,17 +8,18 @@ class PerlerColor(object):
         self.rgb = rgb
         self.type_ = type_
 
+    @property
+    def rgba(self):
+        return self.rgb + (255,)
+
     def __repr__(self):
         return "<PerlerColor {code} ({r},{g},{b})>".format(code=self.code,
             r=self.rgb[0], g=self.rgb[1], b=self.rgb[2])
 
 def best_match(pallette, rgb):
-    diff = functools.partial(diff_color, rgb)
-    diffs_colors = [(sum(map(abs, diff(c.rgb))), c) for c in pallette]
+    diff = functools.partial(diff_color, real_rgb=rgb)
+    diffs_colors = [(sum(map(abs, diff(other_rgb=c.rgb))), c) for c in pallette]
     return min(diffs_colors, key=operator.itemgetter(0))[1]
 
-def diff_color(rgbA, rgbB):
-    return tuple(a - b for (a, b) in zip(rgbA, rgbB))
-
-def diff_color_normalized(rgbA, rgbB):
-    return tuple((a - b) / a for (a, b) in zip(rgbA, rgbB))
+def diff_color(real_rgb, other_rgb):
+    return tuple(a - b for (a, b) in zip(real_rgb, other_rgb))

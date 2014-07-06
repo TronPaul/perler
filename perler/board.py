@@ -25,8 +25,8 @@ def convert_to_perler(pixels, pallette):
                 beads.append(None)
     return board
 
-def draw_board(pixels, filename):
-    with open(filename, 'wb') as fp:
+def draw_board(pixels, path):
+    with open(path, 'wb') as fp:
         pdf = cairo.PDFSurface(fp, page_width, page_height)
         cr = cairo.Context(pdf)
         cr.save()
@@ -59,3 +59,17 @@ def draw_board(pixels, filename):
                         cr.stroke()
                         cr.restore()
         pdf.finish()
+
+def draw_image(board, path):
+    x_size, y_size = len(board[0]), len(board)
+    img = Image.new('RGBA', (x_size, y_size))
+    pixels = []
+    for row in board:
+        for c in row:
+            if c:
+               pixels.append(c.rgba)
+            else:
+               pixels.append((0,0,0,0))
+    img.putdata(pixels)
+    with open(path, 'wb') as fp:
+        img.save(fp)
