@@ -13,8 +13,8 @@ BOARD_SPACING = 4.8
 BOARD_BORDER = 4
 
 
-def convert_to_perler(pixels, pallette):
-    best_match = functools.partial(perler.bead.best_match, pallette)
+def convert_to_perler(pixels, palette):
+    best_match = functools.partial(perler.bead.best_match, palette)
     board = []
     for row in pixels:
         beads = []

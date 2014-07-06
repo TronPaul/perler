@@ -18,9 +18,9 @@ class PerlerColor(object):
             r=self.rgb[0], g=self.rgb[1], b=self.rgb[2])
 
 
-def best_match(pallette, rgb):
+def best_match(palette, rgb):
     diff = functools.partial(diff_color, real_rgb=rgb)
-    diffs_colors = [(sum(map(abs, diff(other_rgb=c.rgb))), c) for c in pallette]
+    diffs_colors = [(sum(map(abs, diff(other_rgb=c.rgb))), c) for c in palette]
     return min(diffs_colors, key=operator.itemgetter(0))[1]
 
 

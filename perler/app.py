@@ -4,18 +4,18 @@ import perler.bead
 from pathlib import PurePath
 
 
-def image_to_perler_image(image_path, pallette_path):
-    pallette = read_pallette(pallette_path)
+def image_to_perler_image(image_path, palette_path):
+    palette = read_pallette(palette_path)
     pixels = read_image_pixels(image_path)
-    board = perler.board.convert_to_perler(pixels, pallette)
+    board = perler.board.convert_to_perler(pixels, palette)
     perler_image_path = image_path.split('.')[0] + '_perler.' + image_path.split('.')[1]
     perler.board.draw_image(board, perler_image_path)
 
 
-def image_to_perler_pdf(image_path, pallette_path):
-    pallette = read_pallette(pallette_path)
+def image_to_perler_pdf(image_path, palette_path):
+    palette = read_pallette(palette_path)
     pixels = read_image_pixels(image_path)
-    board = perler.board.convert_to_perler(pixels, pallette)
+    board = perler.board.convert_to_perler(pixels, palette)
     board_pixels = [[c.rgb[:3] if c else None for c in row] for row in board]
     perler_pdf_path = PurePath(image_path).stem + '_perler.pdf'
     perler.board.draw_board(board_pixels, perler_pdf_path)
