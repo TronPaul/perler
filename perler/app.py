@@ -23,22 +23,23 @@ def image_to_perler_pdf(image_path, pallette_path):
 
 def read_image_pixels(image_path):
     img = Image.open(image_path)
-    rgb_img = img.convert('RGBA')
-    img.close()
-    x_size, y_size = rgb_img.size
-    pixels = []
+    if img.mode != 'RGBA':
+        print('Warning: This image is not transparent, there may be extra unwanted pixels!')
+        img, old = img.convert('RGBA'), img
+        old.close()
+    x_size, y_size = img.size
     pixels = []
     for y in range(y_size):
         row = []
         pixels.append(row)
         for x in range(x_size):
-            p = rgb_img.getpixel((x,y))
+            p = img.getpixel((x,y))
             if p[3] == 0:
                 p = None
             else:
                 p = p[:3]
             row.append(p)
-    rgb_img.close()
+    img.close()
     return pixels
 
 
