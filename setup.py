@@ -5,7 +5,7 @@ from setuptools import find_packages
 
 version = '0.0.1-SNAPSHOT'
 
-install_requires = ['Pillow']
+install_requires = ['Pillow', 'pycairo']
 
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
