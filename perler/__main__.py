@@ -1,4 +1,13 @@
 from perler import app
-import sys
+import argparse
 
-app.image_to_perler_pdf(sys.argv[1], sys.argv[2])
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('image')
+    parser.add_argument('palette')
+    args = parser.parse_args()
+    app.image_to_perler_pdf(args.image, args.palette)
+
+if __name__ == '__main__':
+    main()

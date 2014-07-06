@@ -1,7 +1,7 @@
 import PIL.Image as Image
-
 import perler.board
 import perler.bead
+
 
 def image_to_perler_image(image_path, pallette_path):
     pallette = read_pallette(pallette_path)
@@ -9,6 +9,7 @@ def image_to_perler_image(image_path, pallette_path):
     board = perler.board.convert_to_perler(pixels, pallette)
     perler_image_path = image_path.split('.')[0] + '_perler.' + image_path.split('.')[1]
     perler.board.draw_image(board, perler_image_path)
+
 
 def image_to_perler_pdf(image_path, pallette_path):
     pallette = read_pallette(pallette_path)
@@ -18,9 +19,10 @@ def image_to_perler_pdf(image_path, pallette_path):
     perler_pdf_path = image_path.split('.')[0] + '_perler.' + 'pdf'
     perler.board.draw_board(board_pixels, perler_pdf_path)
 
+
 def read_image_pixels(image_path):
     img = Image.open(image_path)
-    img.convert('RGBA')
+    img = img.convert('RGBA')
     x_size, y_size = img.size
     pixels = []
     for y in range(y_size):
@@ -34,6 +36,7 @@ def read_image_pixels(image_path):
                 p = p[:3]
             row.append(p)
     return pixels
+
 
 def read_pallette(pallette_path):
     pallette = []

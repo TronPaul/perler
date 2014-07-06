@@ -1,16 +1,17 @@
 import perler.bead
-import cairo
+import cairocffi as cairo
 import functools
 import math
 
-page_width = 595
-page_height = 842
-point_to_milimeter = 72/25.4
+#A4 page
+PAGE_WIDTH = 595
+PAGE_HEIGHT = 842
 
 BEAD_RADIUS = 1.75
 BEAD_THICKNESS = 1
 BOARD_SPACING = 4.8
 BOARD_BORDER = 4
+
 
 def convert_to_perler(pixels, pallette):
     best_match = functools.partial(perler.bead.best_match, pallette)
@@ -25,9 +26,10 @@ def convert_to_perler(pixels, pallette):
                 beads.append(None)
     return board
 
+
 def draw_board(pixels, path):
     with open(path, 'wb') as fp:
-        pdf = cairo.PDFSurface(fp, page_width, page_height)
+        pdf = cairo.PDFSurface(fp, PAGE_WIDTH, PAGE_HEIGHT)
         cr = cairo.Context(pdf)
         cr.save()
         cr.set_source_rgb(1, 1, 1)
@@ -59,6 +61,7 @@ def draw_board(pixels, path):
                         cr.stroke()
                         cr.restore()
         pdf.finish()
+
 
 def draw_image(board, path):
     x_size, y_size = len(board[0]), len(board)
