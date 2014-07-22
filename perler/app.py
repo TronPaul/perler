@@ -1,6 +1,6 @@
 import PIL.Image as Image
 import perler.board
-import perler.bead
+from perler.bead import PerlerColor
 import csv
 import math
 from pathlib import PurePath
@@ -103,13 +103,12 @@ def crop_transparent(img_pixels):
 
 def read_palette(palette_path):
     palette = []
-    with open(palette_path) as f:
-        for i, line in enumerate(f):
-            if i == 0:
-                continue
-            code, name, r, g, b, type_, _ = line.split(',')
-            palette.append(perler.bead.PerlerColor(code,
-                                                   name, (int(r), int(g), int(b)), type_))
+    with open(palette_path) as fp:
+        reader = csv.reader(fp)
+        next(reader)
+        for row in reader:
+            code, name, r, g, b, type_, _ = row
+            palette.append(PerlerColor(code, name, (int(r), int(g), int(b)), type_))
     return palette
 
 
