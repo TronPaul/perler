@@ -33,7 +33,8 @@ def read_image(image_path):
     return PerlerImage(pixels, alpha)
 
 
-def crop_transparent(img_pixels):
+def crop_transparent(image):
+    img_pixels = image.pixels
     middle = math.ceil(len(img_pixels[0]) / 2)
     left_edge, right_edge, top_edge, bottom_edge = len(img_pixels[0]), 0, len(img_pixels), 0
     found_non_empty_row = False
@@ -76,5 +77,5 @@ def crop_transparent(img_pixels):
         img_pixels = img_pixels[top_edge:bottom_edge + 1]
     if left_edge != len(img_pixels[0]) and right_edge != 0:
         img_pixels = [row[left_edge:right_edge + 1] for row in img_pixels]
-    return img_pixels
+    return PerlerImage(img_pixels, image.transparent)
 
