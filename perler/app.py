@@ -1,16 +1,17 @@
 from perler.board import convert_to_perler, draw_board
 from perler.bead import PerlerColor
-from perler.img import crop_transparent, read_image
+from perler.img import crop_transparent, convert_transparent, read_image
 import csv
 from pathlib import PurePath
 
 
-def image_to_perler_pdf(image_path, palette_path):
+def image_to_perler_pdf(image_path, palette_path, crop=True):
     palette = read_palette(palette_path)
     perler_image = read_image(image_path)
-    if perler_image.transparent:
+    if crop:
+        if not perler_image.transparent:
+            perler_image = convert_transparent(perler_image)
         perler_image = crop_transparent(perler_image)
-    # TODO: else crop top left color
     board = convert_to_perler(perler_image.pixels, palette)
     board_pixels = [[c.rgb[:3] if c else None for c in row] for row in board]
     perler_pdf_path = PurePath(image_path).stem + '_perler.pdf'
